@@ -21,6 +21,14 @@ export const frontendConfig = (): SuperTokensConfig => {
     recipeList: [
       PasswordlessReact.init({
         contactMethod: "EMAIL",
+        signInUpFeature: {
+          emailOrPhoneFormStyle: `
+              [data-supertokens~=superTokensBranding] {
+                  
+                  display:none;
+              }
+          `,
+        },
       }),
       SessionReact.init(),
     ],
