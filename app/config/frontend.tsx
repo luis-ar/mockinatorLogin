@@ -18,13 +18,27 @@ export function setRouter(
 export const frontendConfig = (): SuperTokensConfig => {
   return {
     appInfo,
+    getRedirectionURL: async (context) => {
+      if (context.action === "SUCCESS" && context.newSessionCreated) {
+        if (context.redirectToPath !== undefined) {
+          // we are navigating back to where the user was before they authenticated
+          return context.redirectToPath;
+        }
+        if (context.createdNewUser) {
+          // user signed up
+        } else {
+          // user signed in
+        }
+        return "/home";
+      }
+      return undefined;
+    },
     recipeList: [
       PasswordlessReact.init({
         contactMethod: "EMAIL",
         signInUpFeature: {
           emailOrPhoneFormStyle: `
               [data-supertokens~=superTokensBranding] {
-                  
                   display:none;
               }
           `,
